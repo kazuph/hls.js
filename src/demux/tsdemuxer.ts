@@ -107,7 +107,7 @@ class TSDemuxer implements Demuxer {
       let foundPat = false;
       for (let j = 0; j < scanwindow; j += PACKET_LENGTH) {
         if (data[j] === 0x47) {
-          if (!foundPat && parsePID(data, i) === 0) {
+          if (!foundPat && parsePID(data, j) === 0) {
             foundPat = true;
           }
           if (foundPat && j + PACKET_LENGTH > scanwindow) {
@@ -361,7 +361,7 @@ class TSDemuxer implements Demuxer {
             pmtParsed = this.pmtParsed = true;
             break;
           }
-          case 17:
+          case 0x11:
           case 0x1fff:
             break;
           default:
