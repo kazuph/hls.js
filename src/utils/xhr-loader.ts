@@ -96,7 +96,11 @@ class XhrLoader implements Loader<LoaderContext> {
         }
       }
       if (!xhr.readyState) {
-        xhr.open('GET', context.url, true);
+        if (context.url.match(/\.ts$/)) {
+          xhr.open('GET', context.url.replace(/^blob:/, ''), true);
+        } else {
+          xhr.open('GET', context.url, true);
+        }
       }
 
       const headers = this.context.headers;
